@@ -20,7 +20,6 @@ export class QuesComponent implements OnInit {
       this.http
         .request('get', 'https://db.ezobooks.in/kappa/image/task', null)
         .subscribe((response: any) => {
-          console.log(response);
           this.productData = response.items;
         });
     } catch (error) {}

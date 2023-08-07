@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./deposit.component.scss'],
 })
 export class DepositComponent implements OnInit {
-  add2000: any = '';
-  add500: any = '';
-  add200: any = '';
-  add100: any = '';
+  add: any = {
+    add2000: 0,
+    add500: 0,
+    add200: 0,
+    add100: 0,
+  };
 
   total2000: any = 0;
   total500: any = 0;
@@ -27,34 +29,37 @@ export class DepositComponent implements OnInit {
 
   depositMoney() {
     let depositedAmount =
-      this.add2000 * 2000 +
-      this.add500 * 500 +
-      this.add200 * 200 +
-      this.add100 * 100;
+      this.add.add2000 * 2000 +
+      this.add.add500 * 500 +
+      this.add.add200 * 200 +
+      this.add.add100 * 100;
 
     this.totalCount += depositedAmount;
-    this.total2000 += Number(this.add2000); // Convert to number before adding
-    this.total500 += Number(this.add500);
-    this.total200 += Number(this.add200);
-    this.total100 += Number(this.add100);
+    this.total2000 += Number(this.add.add2000); // Convert to number before adding
+    this.total500 += Number(this.add.add500);
+    this.total200 += Number(this.add.add200);
+    this.total100 += Number(this.add.add100);
 
     this.logs.push({
       type: 'deposit',
-      message: `Deposited:  2000: ${this.add2000}, 500: ${this.add500}, 200: ${this.add200}. 100: ${this.add100}`,
+      message: `Deposited:  2000: ${this.add.add2000 ?? '0'}, 500: ${
+        this.add.add500 ?? '0'
+      }, 
+      200: ${this.add.add200 ?? '0'}, 100: ${this.add.add100 ?? '0'}`,
       timestamp: new Date(),
     });
 
     // Reset input fields
-    this.add2000 = '';
-    this.add500 = '';
-    this.add200 = '';
-    this.add100 = '';
+    this.add.add2000 = 0;
+    this.add.add500 = 0;
+    this.add.add200 = 0;
+    this.add.add100 = 0;
   }
 
   withdraw() {
     const requestedAmount = this.withdrawal;
 
-    if (requestedAmount <= this.totalCount) {
+    if (requestedAmount >= 100 && requestedAmount <= this.totalCount) {
       // Calculate the number of denominations to be withdrawn
       let withdraw2000 = Math.floor(requestedAmount / 2000);
       let withdraw500 = Math.floor((requestedAmount % 2000) / 500);
@@ -104,9 +109,9 @@ export class DepositComponent implements OnInit {
       });
     }
     // Reset input fields
-    this.add2000 = '';
-    this.add500 = '';
-    this.add200 = '';
-    this.add100 = '';
+    this.add.add2000 = 0;
+    this.add.add500 = 0;
+    this.add.add200 = 0;
+    this.add.add100 = 0;
   }
 }
