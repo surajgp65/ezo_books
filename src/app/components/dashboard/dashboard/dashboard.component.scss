@@ -1,0 +1,12 @@
+.card-content {
+  min-height: 20rem;
+  align-items: center;
+  cursor: pointer;
+}
+
+.route-text {
+  transition: 0.2s all ease-in-out;
+  &:hover {
+    transform: scale(1.2);
+  }
+}

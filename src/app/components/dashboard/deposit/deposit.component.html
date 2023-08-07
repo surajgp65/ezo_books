@@ -1,0 +1,115 @@
+<div class="container px-4 mt-5">
+  <div class="glass p-3">
+    <h4>Current Available Denomination in Machine</h4>
+
+    <table class="table table-striped mt-4">
+      <tbody>
+        <tr>
+          <th scope="row">2000</th>
+          <td>{{ total2000 }}</td>
+          <td>|</td>
+          <td>
+            <input
+              type="text"
+              placeholder="0"
+              name="add2000"
+              [(ngModel)]="add2000"
+              class="form-control"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">500</th>
+          <td>{{ total500 }}</td>
+          <td>|</td>
+          <td>
+            <input
+              type="text"
+              placeholder="0"
+              name="add500"
+              [(ngModel)]="add500"
+              class="form-control"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">200</th>
+          <td>{{ total200 }}</td>
+          <td>|</td>
+          <td>
+            <input
+              type="text"
+              placeholder="0"
+              name="add200"
+              [(ngModel)]="add200"
+              class="form-control"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">100</th>
+          <td>{{ total100 }}</td>
+          <td>|</td>
+          <td>
+            <input
+              type="text"
+              placeholder="0"
+              name="add100"
+              [(ngModel)]="add100"
+              class="form-control"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Total</th>
+          <td>{{ totalCount }}</td>
+          <td>|</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="depositMoney()"
+            >
+              Deposit
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <hr />
+    <div class="mt-3 d-flex">
+      <input
+        type="text"
+        class="form-control"
+        name="withdrawal"
+        placeholder="Enter amount for withdrawal"
+        [(ngModel)]="withdrawal"
+        id=""
+      />
+      <button type="button" class="ml-2 btn btn-success" (click)="withdraw()">
+        Withdrawal
+      </button>
+    </div>
+
+    <hr />
+
+    <ul class="p-0">
+      <div
+        *ngFor="let log of logs.slice().reverse()"
+        class="alert mb-2"
+        [ngClass]="{
+          'alert-success': log.type === 'deposit',
+          'alert-danger': log.type === 'withdraw_failed',
+          'alert-info': log.type === 'withdraw_success'
+        }"
+      >
+        <div class="d-flex flex-column">
+          <span> {{ log.message }}</span>
+
+          <span> {{ log.timestamp }} </span>
+        </div>
+      </div>
+    </ul>
+  </div>
+</div>
