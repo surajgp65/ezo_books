@@ -58,8 +58,13 @@ export class DepositComponent implements OnInit {
 
   withdraw() {
     const requestedAmount = this.withdrawal;
+    console.log(requestedAmount % 100 < 1 || requestedAmount % 100 > 99);
 
-    if (requestedAmount >= 100 && requestedAmount <= this.totalCount) {
+    if (
+      requestedAmount >= 100 &&
+      requestedAmount <= this.totalCount &&
+      (requestedAmount % 100 < 1 || requestedAmount % 100 > 99)
+    ) {
       let remainingAmount = requestedAmount;
 
       let withdraw2000 = Math.min(
