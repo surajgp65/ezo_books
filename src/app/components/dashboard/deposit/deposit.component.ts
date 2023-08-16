@@ -60,33 +60,42 @@ export class DepositComponent implements OnInit {
     const requestedAmount = this.withdrawal;
 
     if (requestedAmount >= 100 && requestedAmount <= this.totalCount) {
-      // Calculate the number of denominations to be withdrawn
-      let withdraw2000 = Math.floor(requestedAmount / 2000);
-      let withdraw500 = Math.floor((requestedAmount % 2000) / 500);
-      let withdraw200 = Math.floor(((requestedAmount % 2000) % 500) / 200);
-      let withdraw100 = Math.floor(
-        (((requestedAmount % 2000) % 500) % 200) / 100
+      let remainingAmount = requestedAmount;
+
+      let withdraw2000 = Math.min(
+        Math.floor(remainingAmount / 2000),
+        this.total2000
+      );
+      remainingAmount -= withdraw2000 * 2000;
+
+      let withdraw500 = Math.min(
+        Math.floor(remainingAmount / 500),
+        this.total500
+      );
+      remainingAmount -= withdraw500 * 500;
+
+      let withdraw200 = Math.min(
+        Math.floor(remainingAmount / 200),
+        this.total200
+      );
+      remainingAmount -= withdraw200 * 200;
+
+      let withdraw100 = Math.min(
+        Math.floor(remainingAmount / 100),
+        this.total100
       );
 
-      // Check if the required denominations are available for withdrawal
       if (
         withdraw2000 <= this.total2000 &&
         withdraw500 <= this.total500 &&
         withdraw200 <= this.total200 &&
         withdraw100 <= this.total100
       ) {
-        // Update the machine state
         this.total2000 -= withdraw2000;
         this.total500 -= withdraw500;
         this.total200 -= withdraw200;
         this.total100 -= withdraw100;
         this.totalCount -= requestedAmount;
-
-        console.log('Withdrawn denominations:');
-        console.log('2000:', withdraw2000);
-        console.log('500:', withdraw500);
-        console.log('200:', withdraw200);
-        console.log('100:', withdraw100);
 
         this.logs.push({
           type: 'withdraw_success',
@@ -100,7 +109,6 @@ export class DepositComponent implements OnInit {
           timestamp: new Date(),
         });
       }
-      this.withdrawal = '';
     } else {
       this.logs.push({
         type: 'withdraw_failed',
@@ -108,7 +116,7 @@ export class DepositComponent implements OnInit {
         timestamp: new Date(),
       });
     }
-    // Reset input fields
+    this.withdrawal = '';
     this.add.add2000 = 0;
     this.add.add500 = 0;
     this.add.add200 = 0;
