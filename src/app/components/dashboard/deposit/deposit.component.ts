@@ -27,6 +27,7 @@ export class DepositComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  /* Deposit money */
   depositMoney() {
     let depositedAmount =
       this.add.add2000 * 2000 +
